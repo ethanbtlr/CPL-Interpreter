@@ -1,5 +1,7 @@
+from lib2to3.pgen2 import token
 import sys
 import json
+import string
 
 
 # Symbol Table
@@ -46,37 +48,50 @@ DELIMITER_CHARS = [" ", ",", "\t", '"']
 
 # Scan the contents of the input file
 def scan_file(input_file):
+    tokens = []
 
-    # Retrieve the info from the file
-    #reads in file
+    # Opens file
+    with open(input_file) as f:
 
-    #opens file in read mode
-    f = open(input_file,"r")
-    contents = f.readlines()
+        contents = f.readlines()
 
+        # Gets each line in the file
+        for line in contents:
 
-    for line in contents:
-        split = line.split()
+            # Checks to see if the line contains a single-line comment
+            if '//' in line:
 
-        for word in split:
-            stripped = word.strip()
-            print(word)
+                # Skips a line if it is a just a comment
+                if line.startswith("//"):
+                    continue
+                
+                # If there is a single line comment in the line, but not at the beginning
+                else:
+                    # Find where the comment starts
+                    position = line.find("//")
+                    
+                    # Slice the string to remove the comment
+                    line = line[0:position]
+                    
 
-    f.close()
-    return 0
-    
-    
+                
+                
+            # Gets each word in each line and adds it to the token array
+            for word in line.split(" "):
 
-def output_syntax():
-    print("Results: ")
+                if word != "":
+                    tokens.append(word)
+
+    print(tokens)
+
 
 # Pass the user's input file into the scan file function
-scan_file(sys.argv[1])
 
-
+# scan_file(sys.argv[1])
+scan_file("test.scl")
 
 # List of tested files that were given and used
-''' 
+""" 
 arduino_ex1.scl
 arrayex1.scl
 arrayex1b.scl
@@ -85,4 +100,4 @@ bitops1.scl
 datablistp.scl
 linkedg.scl
 welcome.scl
-'''
+"""
