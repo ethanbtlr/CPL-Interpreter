@@ -31,16 +31,10 @@ KEYWORDS = [
     "exit",
 ]
 
-# Identifiers
-
-
 # Operators
 ASSIGNMENT_OP = ["="]
 ARITHMETIC_OP = ["+", "-", "*", "/"]
 RELATIONAL_OP = ["==", "!=", "<", ">", "<=", ">="]
-
-# Constants
-
 
 # Special Characters
 DELIMITER_CHARS = [" ", ",", "\t", '"']
@@ -54,41 +48,57 @@ def scan_file(input_file):
     with open(input_file) as f:
 
         contents = f.readlines()
+        isMultilineComment = False
 
         # Gets each line in the file
         for line in contents:
 
-            # Checks to see if the line contains a single-line comment
-            if '//' in line:
+            # Skip if the line is the start of a multiline comment
+            if line.strip() == "description":
+                isMultilineComment = True
+                continue
 
-                # Skips a line if it is a just a comment
-                if line.startswith("//"):
-                    continue
-                
-                # If there is a single line comment in the line, but not at the beginning
-                else:
-                    # Find where the comment starts
-                    position = line.find("//")
-                    
-                    # Slice the string to remove the comment
-                    line = line[0:position]
-                    
+            # Skip if the line is the end of a multiline comment
+            elif line.strip() == "*/":
+                isMultilineComment = False
+                continue
 
-                
-                
-            # Gets each word in each line and adds it to the token array
-            for word in line.split(" "):
+            # If the line isn't part of a multiline comment
+            elif isMultilineComment == False:
 
-                if word != "":
-                    tokens.append(word)
+                # Checks to see if the line contains a single-line comment
+                if "//" in line:
 
-    print(tokens)
+                    # Skips a line if it is a just a comment
+                    if line.startswith("//"):
+                        continue
+
+                    # If there is a single line comment in the line, but not at the beginning
+                    else:
+                        # Find where the comment starts
+                        position = line.find("//")
+
+                        # Slice the string to remove the comment
+                        line = line[0:position]
+
+                # Gets each word in each line and adds it to the token array
+                for word in line.split(" "):
+
+                    if word != "":
+                        tokens.append(word)
+
+    JSON_export(tokens)
+
+
+def JSON_export(tokens_list):
+    encode = json.JSONEncoder().encode({"Tokens": tokens_list})
+    with open("JSON_export.json", "w") as f:
+        f.write(encode)
 
 
 # Pass the user's input file into the scan file function
-
-# scan_file(sys.argv[1])
-scan_file("test.scl")
+scan_file(sys.argv[1])
+# scan_file("test.scl")
 
 # List of tested files that were given and used
 """ 
