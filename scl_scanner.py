@@ -88,9 +88,19 @@ def scan_file(input_file):
 
 
 def JSON_export(tokens_list):
+
+    # Prints the tokens
+    print(json.dumps({"Tokens": tokens_list}, indent=2))
+
+    # Encodes the tokens into a JSON format
     encode = json.JSONEncoder().encode({"Tokens": tokens_list})
+
+    # Write the encoded tokens to a file
     with open("JSON_export.json", "w") as f:
         f.write(encode)
+
+
+
 
 
 # Pass the user's input file into the scan file function
