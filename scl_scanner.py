@@ -79,7 +79,7 @@ def scan_file(input_file):
                         line = line[0:position]
 
                         # Add newline character to the line since it was removed with the comment
-                        line = line.rstrip() + "\n"
+                        line = line + "\n"
 
                 # Gets each word in each line and adds it to the token array
                 for word in line.split(" "):
