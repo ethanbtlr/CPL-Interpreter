@@ -78,6 +78,9 @@ def scan_file(input_file):
                         # Slice the string to remove the comment
                         line = line[0:position]
 
+                        # Add newline character to the line since it was removed with the comment
+                        line = line.rstrip() + "\n"
+
                 # Gets each word in each line and adds it to the token array
                 for word in line.split(" "):
 
@@ -89,23 +92,23 @@ def scan_file(input_file):
 
 def JSON_export(tokens_list):
 
+    # Create a dictionary of tokens
+    tokens = {"Tokens": tokens_list}
+
     # Prints the tokens
-    print(json.dumps({"Tokens": tokens_list}, indent=2))
+    print(json.dumps(tokens, indent=3))
 
     # Encodes the tokens into a JSON format
-    encode = json.JSONEncoder().encode({"Tokens": tokens_list})
+    encode = json.JSONEncoder().encode(tokens)
 
     # Write the encoded tokens to a file
     with open("JSON_export.json", "w") as f:
         f.write(encode)
 
 
-
-
-
 # Pass the user's input file into the scan file function
-scan_file(sys.argv[1])
-# scan_file("test.scl")
+# scan_file(sys.argv[1])
+scan_file("welcome.scl")
 
 # List of tested files that were given and used
 """ 
