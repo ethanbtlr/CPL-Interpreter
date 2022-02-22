@@ -1,8 +1,5 @@
-from lib2to3.pgen2 import token
 import sys
 import json
-import string
-
 
 # Symbol Table
 # Keywords
