@@ -119,8 +119,12 @@ def JSON_export(tokens_list):
 
 
 # Pass the user's input file into the scan file function
-# scan_file(sys.argv[1])
-scan_file("welcome.scl")
+try:
+    scan_file(sys.argv[1])
+except IndexError as err:
+    print("A file wasn't passed as an argument. Error: {0}".format(err))
+
+# scan_file("welcome.scl")
 
 # List of tested files that were given and used
 """ 
