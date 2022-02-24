@@ -50,13 +50,16 @@ def scan_file(input_file):
         # Gets each line in the file
         for line in contents:
 
+            # Remove leading and trailing whitespace from the line
+            line = line.strip()
+
             # Skip if the line is the start of a multiline comment
-            if line.strip() == "description":
+            if line == "description":
                 isMultilineComment = True
                 continue
 
             # Skip if the line is the end of a multiline comment
-            elif line.strip() == "*/":
+            elif line == "*/":
                 isMultilineComment = False
                 continue
 
@@ -84,8 +87,16 @@ def scan_file(input_file):
                 # Gets each word in each line and adds it to the token array
                 for word in line.split(" "):
 
-                    if word != "":
+                    # If the word has newline token in it, split it up and add them both to the array
+                    position = word.find("\n")
+                    if position != -1:
+                        if word != "":
+                            word = word[0:position]
+                            tokens.append(word)
+                        tokens.append("\n")
+                    elif word != "":
                         tokens.append(word)
+
 
     JSON_export(tokens)
 
@@ -96,7 +107,8 @@ def JSON_export(tokens_list):
     tokens = {"Tokens": tokens_list}
 
     # Prints the tokens
-    print(json.dumps(tokens, indent=3))
+    dump = json.dumps(tokens, indent=3)
+    print(dump)
 
     # Encodes the tokens into a JSON format
     encode = json.JSONEncoder().encode(tokens)
