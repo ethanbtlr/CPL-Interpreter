@@ -50,16 +50,16 @@ def scan_file(input_file):
         # Gets each line in the file
         for line in contents:
 
-            # Remove leading and trailing whitespace from the line
-            line = line.strip()
+            # Remove leading and trailing spaces from the line
+            line = line.strip(" ")
 
             # Skip if the line is the start of a multiline comment
-            if line == "description":
+            if line.strip() == "description":
                 isMultilineComment = True
                 continue
 
             # Skip if the line is the end of a multiline comment
-            elif line == "*/":
+            elif line.strip() == "*/":
                 isMultilineComment = False
                 continue
 
@@ -90,11 +90,10 @@ def scan_file(input_file):
                     # If the word has newline token in it, split it up and add them both to the array
                     position = word.find("\n")
                     if position != -1:
-                        if word != "":
-                            word = word[0:position]
-                            tokens.append(word)
+                        word = word[0:position]
+                        tokens.append(word)
                         tokens.append("\n")
-                    elif word != "":
+                    else:
                         tokens.append(word)
 
 
@@ -103,9 +102,15 @@ def scan_file(input_file):
 
 def JSON_export(tokens_list):
 
-    # Create a dictionary of tokens
-    tokens = {"Tokens": tokens_list}
+    # Removes all empty tokens
+    for i in tokens_list:
+        try:
+            tokens_list.remove("")
+        except ValueError:
+            break
 
+    tokens = {"Tokens": tokens_list}
+    
     # Prints the tokens
     dump = json.dumps(tokens, indent=3)
     print(dump)
@@ -120,20 +125,20 @@ def JSON_export(tokens_list):
 
 # Pass the user's input file into the scan file function
 try:
+    # scan_file("arduino_ex1.scl")
     scan_file(sys.argv[1])
 except IndexError as err:
     print("A file wasn't passed as an argument. Error: {0}".format(err))
 
-# scan_file("welcome.scl")
 
 # List of tested files that were given and used
 """ 
-arduino_ex1.scl
-arrayex1.scl
-arrayex1b.scl
-arrayex4b.scl
-bitops1.scl
-datablistp.scl
-linkedg.scl
-welcome.scl
+# arduino_ex1.scl
+# arrayex1.scl
+# arrayex1b.scl
+# arrayex4b.scl
+# bitops1.scl
+# datablistp.scl
+# linkedg.scl
+# welcome.scl
 """
