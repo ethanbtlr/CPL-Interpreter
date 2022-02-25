@@ -112,7 +112,7 @@ def JSON_export(tokens_list):
     tokens = {"Tokens": tokens_list}
     
     # Prints the tokens
-    dump = json.dumps(tokens, indent=3)
+    dump = json.dumps(tokens)
     print(dump)
 
     # Encodes the tokens into a JSON format
@@ -125,7 +125,6 @@ def JSON_export(tokens_list):
 
 # Pass the user's input file into the scan file function
 try:
-    # scan_file("arduino_ex1.scl")
     scan_file(sys.argv[1])
 except IndexError as err:
     print("A file wasn't passed as an argument. Error: {0}".format(err))
@@ -133,7 +132,7 @@ except IndexError as err:
 
 # List of tested files that were given and used
 """ 
-# arduino_ex1.scl
+arduino_ex1.scl
 # arrayex1.scl
 # arrayex1b.scl
 # arrayex4b.scl
