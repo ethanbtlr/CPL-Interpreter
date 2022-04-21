@@ -1,0 +1,6 @@
+description
+ Program     : testFail.scl
+ Author      : Ethan Butler March 24, 2022
+ Description : Have an syntactically invalid SCL file
+ */
+nonexistentkeyword

@@ -1,1 +1,1 @@
-{"Tokens": ["import", "\"scl.h\"", "\n", "implementations", "\n", "function", "main", "return", "type", "integer", "is", "\n", "variables", "\n", "define", "x", "of", "type", "double", "\n", "begin", "\n", "display", "\"Welcome", "to", "the", "world", "of", "SCL\"", "\n", "set", "x", "=", "45.95", "\t", "\n", "\n", "display", "\"Value", "of", "x", ":", "\"", ",", "x", "\n", "exit", "\n", "endfun", "main", "\n"]}
+{"Tokens": ["nonexistentkeyword", "\n"]}

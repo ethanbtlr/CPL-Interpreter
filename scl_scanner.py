@@ -5,7 +5,7 @@ import json
 # Keywords
 KEYWORDS = [
     "import",
-    "implementation",
+    "implementations",
     "function",
     "is",
     "variables",
@@ -36,8 +36,7 @@ RELATIONAL_OP = ["==", "!=", "<", ">", "<=", ">="]
 # Special Characters
 DELIMITER_CHARS = [" ", ",", "\t", "\n", ":", ";", "(", ")"]
 
-ALL_CHARS__OPS = ASSIGNMENT_OP + ARITHMETIC_OP + RELATIONAL_OP + DELIMITER_CHARS
-
+ALL_CHARS_OPS = ASSIGNMENT_OP + ARITHMETIC_OP + RELATIONAL_OP + DELIMITER_CHARS
 
 # Scan the contents of the input file
 def scan_file(input_file):
@@ -91,7 +90,7 @@ def scan_file(input_file):
 
                     # If the word has special character or operator in it, split the tokens up and add them both to the array
                     hasSpecialChar = False
-                    for i in ALL_CHARS__OPS:
+                    for i in ALL_CHARS_OPS:
 
                         # If a special character is found
                         position = word.find(i)
@@ -134,7 +133,7 @@ def scan_file(input_file):
 
                                 # See if another special character is in the rest of the list
                                 hasAnotherSpecialChar = False
-                                for j in ALL_CHARS__OPS:
+                                for j in ALL_CHARS_OPS:
                                     position = line.find(j)
                                     if j != -1:
                                         word = wordTwo
