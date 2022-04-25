@@ -7,6 +7,7 @@
 
 # expression class
 
+<<<<<<< HEAD
 
 # Pseudocode
 
@@ -26,3 +27,6 @@
 
 
 
+=======
+#test
+>>>>>>> 3c253439a9ac2a9f6212a4e688cb4b113d0ad568
