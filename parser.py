@@ -9,9 +9,18 @@ class Parser:
 
         # Create variables for the class
         self.input = input
+        self.current_line = 0
+        self.current_location_in_line = 0
         self.current_location = 0
-        self.read_file = "Text_Export.txt"
-        self.length = len(self.read_file)  # Amount of expressions found
+        self.line_length = 0
+        self.read_file = "JSON_export.json"
+        self.expressions_file = "Text_Export.txt"
+        self.expressions_length = len(
+            self.expressions_file
+        )  # Amount of expressions found
+        self.file_object = open("JSON_export.json", "r")
+        self.loaded_file = json.load(self.file_object)
+        self.length = len(self.loaded_file["Tokens"])  # Amount of tokens found
         self.identifiers = []
         self.values = []
 
@@ -23,11 +32,10 @@ class Parser:
     # Get next token function
     def getNextToken(self):
 
-        # If there are more expressions to parse
-            # If there are more tokens in the expression to parse
-
-
+        # If there are more tokens to parse
         if self.current_location < self.length:
+            nextToken = self.loaded_file["Tokens"][self.current_location]
+
             # If the next token is a keyword which precedes identifiers, add the token after that to the list of identifiers
             if nextToken == "define" or nextToken == "function" or nextToken == "set":
                 self.identifiers.append(

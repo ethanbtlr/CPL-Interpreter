@@ -41,7 +41,7 @@ ALL_CHARS_OPS = ASSIGNMENT_OP + ARITHMETIC_OP + RELATIONAL_OP + DELIMITER_CHARS
 # Scan the contents of the input file into a list of expressions
 def scan_file(input_file):
 
-    # Change to expressions
+    tokens = []
     expressions = []
 
     # Opens file
@@ -87,11 +87,76 @@ def scan_file(input_file):
                         # Add newline character to the line since it was removed with the comment
                         line = line + "\n"
 
+                # Adds expressions to expressions array
                 expressions.append(line)
+
+                # Gets each word in each line and adds it to the token array
+                for word in line.split(" "):
+
+                    # If the word has special character or operator in it, split the tokens up and add them both to the array
+                    hasSpecialChar = False
+                    for i in ALL_CHARS_OPS:
+
+                        # If a special character is found
+                        position = word.find(i)
+                        if position != -1:
+                            lengthOfWord = len(line)
+                            lengthOfChar = len(i)
+
+                            # Say a special character has been found
+                            hasSpecialChar = True
+
+                            # If special character is at the beginning
+                            if position == 0:
+                                # Append the special character
+                                tokens.append(i)
+
+                                # Append everything after the special character
+                                word = word[lengthOfChar:lengthOfWord]
+                                tokens.append(word)
+
+                            # If special character is at the end
+                            elif position == (lengthOfWord - 1):
+                                # Append everything before the special character
+                                word = word[0:position]
+                                tokens.append(word)
+
+                                # Append the special character
+                                tokens.append(i)
+
+                            # If a special character is in the middle
+                            else:
+                                # Append everything before the special character
+                                wordOne = word[0:position]
+                                tokens.append(wordOne)
+
+                                # Append the special character
+                                tokens.append(i)
+
+                                # Append everything after the special character
+                                wordTwo = word[(position + lengthOfChar) : lengthOfWord]
+
+                                # See if another special character is in the rest of the list
+                                hasAnotherSpecialChar = False
+                                for j in ALL_CHARS_OPS:
+                                    position = line.find(j)
+                                    if j != -1:
+                                        word = wordTwo
+                                        hasAnotherSpecialChar = True
+                                # If there isn't another special character just add the rest of the word to the token list
+                                if hasAnotherSpecialChar == False:
+                                    tokens.append(wordTwo)
+
+                    # If a special character isn't found
+                    if hasSpecialChar == False:
+                        tokens.append(word)
+
+    JSON_export(tokens)
 
     Text_Export(expressions)
 
 
+# Export the expressions to a text file
 def Text_Export(expressions_list):
 
     # Removes all empty expressions
@@ -103,21 +168,43 @@ def Text_Export(expressions_list):
 
     expressions = {"expressions": expressions_list}
 
-
-    # Write the encoded expressions to a file
+    # Write the expressions to a file
     with open("Text_Export.txt", "w") as f:
         for expression in expressions_list:
             f.write(expression)
 
 
+# Exports the tokens to a JSON file
+def JSON_export(tokens_list):
+
+    # Removes all empty tokens
+    for i in tokens_list:
+        try:
+            tokens_list.remove("")
+        except ValueError:
+            break
+
+    tokens = {"Tokens": tokens_list}
+
+    # Prints the tokens
+    dump = json.dumps(tokens)
+    print(dump)
+
+    # Encodes the tokens into a JSON format
+    encode = json.JSONEncoder().encode(tokens)
+
+    # Write the encoded tokens to a file
+    with open("JSON_export.json", "w") as f:
+        f.write(encode)
+
+
 # Pass the user's input file into the scan file function
 # Commented this out to prevent it from being called when imported in another file
-''' 
+""" 
 try:
     scan_file(sys.argv[1])
 
 except IndexError as err:
     print("A file wasn't passed as an argument. Error: {0}".format(err))
 
-'''
-
+"""
