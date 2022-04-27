@@ -121,15 +121,3 @@ except IndexError as err:
 
 '''
 
-
-# List of tested files that were given and used
-""" 
-arduino_ex1.scl
-arrayex1.scl
-arrayex1b.scl
-arrayex4b.scl
-bitops1.scl
-datablistp.scl
-linkedg.scl
-welcome.scl
-"""

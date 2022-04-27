@@ -1,32 +1,28 @@
-# program class
-    # load()
+import scanner
+import parser
 
-    # run()
+# Pass the user's input file into the scan file function
+try:
+    input = "welcome.scl"
+    scanner.scan_file(input)
 
-# statement class
+    # Parse the scanned file 
+    parser = parser.Parser("Text_export.txt")
+    parser.begin()
 
-# expression class
+except IndexError as err:
+    print("A file wasn't passed as an argument. Error: {0}".format(err))
 
-<<<<<<< HEAD
 
-# Pseudocode
+# Parser identifies what the tokens are in each expression (keyword, constants, etc.) and exports the tokens as a parse tree
 
-# Enter an SCL file to interpret
-
-# scl_scanner is used to scan the tokens into a JSON file
-
-# parser identifies what the tokens are (keyword, constants, etc.) and exports the tokens as a parse tree
-
-# instead of printing whatn the tokens are add the tokens to a parse tree
 
 # The interpreter takes the parse tree as input
-# a dictory is made to represent the program's memory
-# for each variable definition a key in the mem dictionary is created
-# the function’s actions are iterated through, with different action types being handled in different ways. Display actions are printed to the console and report log, set actions assign the value of an expression to a key in memory, input actions use Python’s input functionality to prompt the user and assign their input value to a variable
-# in memory, exit/return actions stop the program execution, and if statements have their nested actions executed if their condition is evaluated to be true.
+
+
+# The parse tree is converted to python syntax 
 
 
 
-=======
-#test
->>>>>>> 3c253439a9ac2a9f6212a4e688cb4b113d0ad568
+
+
