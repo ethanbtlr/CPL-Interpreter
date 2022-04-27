@@ -13,10 +13,10 @@ try:
     parser.begin()
 
     # The parse tree will be traversed using a preorder traversal
-    # Each expression in the tree will converted into Python syntax and saved in the file Python_from_Scl_.py
+    # Each expression in the tree will converted into Python syntax and saved in the file Python_from_Scl.py
 
     # The Python code will then be passed as file input and ran with the exec() function
-    exec("Python_From_Scl.py")
+    # exec("Python_From_Scl.py")
 
 
 except IndexError as err:
